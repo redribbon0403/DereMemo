@@ -6,9 +6,10 @@ module.exports = defineConfig({
   pluginOptions: {
     electronBuilder: {
       preload: 'src/preload.js',
-      // Or, for multiple preload files:
-      preload: { preload: 'src/preload.js' }
-    }
+      builderOptions: {
+        productName: 'DereMemo'
+      }
+    },
   },
   configureWebpack: {
     devtool: 'source-map'

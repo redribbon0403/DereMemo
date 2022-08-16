@@ -24,6 +24,11 @@ export default class Scraper {
       timeout: 10000
     })
     this.staticPath = staticPath
+    this.folderPath = ""
+  }
+
+  setFolderPath(path){
+    this.folderPath = path+"/mobamas_pages"
   }
 
   updateHeader(cookies) {
@@ -63,7 +68,7 @@ export default class Scraper {
     }
 
     if(!notSave){
-      await writeFileAt(path, 'w', page)
+      await writeFileAt(this.folderPath, path, 'w', page)
     }
 
     return [page, path]
@@ -139,12 +144,12 @@ export default class Scraper {
       let path = ""
       if (ext != "html"){
         if (["js", "css"].includes(ext)){
-          path = await writeFileAt(targetPath, 'w', content)
+          path = await writeFileAt(this.folderPath, targetPath, 'w', content)
         } else {
           if (ext == "swf"){
             targetPath += "/flash.swf"
           }
-          path = await writeFileAt(targetPath, 'wb', content)
+          path = await writeFileAt(this.folderPath, targetPath, 'wb', content)
         }
       }
 
@@ -208,11 +213,11 @@ export default class Scraper {
       $("#link_section").append(aElem)
     }
  
-    await writeFileAt(path, 'w', $.html())
+    await writeFileAt(this.folderPath, path, 'w', $.html())
 
     try {
       const index = await readFileAsync(this.staticPath+"/assets/text/index.html")
-      await writeFileAt("/index.html", 'w', index)
+      await writeFileAt(this.folderPath, "/index.html", 'w', index)
     } catch (error) {
       log.error("[Error] : index.html not found")
     }
@@ -285,7 +290,7 @@ export default class Scraper {
     }
 
     page = $.html()
-    await writeFileAt(path, 'w', page)
+    await writeFileAt(this.folderPath, path, 'w', page)
   }
 
   async archiveEpisode({url, voiceData}) {
@@ -320,7 +325,7 @@ export default class Scraper {
       page = await this.parseText({text:page, textType : "html"})
     }
 
-    await writeFileAt(path, 'w', page)
+    await writeFileAt(this.folderPath, path, 'w', page)
 
     return [page, path]
   }

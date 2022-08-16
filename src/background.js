@@ -1,7 +1,7 @@
 'use strict'
 
 import path from "path";
-import { app, protocol, BrowserWindow, ipcMain, session } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, session, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const log = require('electron-log')
@@ -146,4 +146,15 @@ ipcMain.on('request-archive', async (event, urlList) => {
   } catch (error) {log.error(error)}
 
   event.reply('archive-done', true)
+})
+
+ipcMain.on('open-folder-dialog', async (event) => {
+  dialog.showOpenDialog({
+    properties: ['openDirectory']
+  }).then((dirPath)=>{
+    if(dirPath.canceled == false && dirPath.filePaths[0]){
+      scraper.setFolderPath(dirPath.filePaths[0])
+      event.reply('folder-path', dirPath.filePaths[0])
+    }
+  })
 })

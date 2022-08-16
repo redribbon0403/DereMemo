@@ -4,8 +4,7 @@ const { promisify } = require('util');
 
 const writeFileAsync = promisify(fs.writeFile);
 
-async function writeFileAt(path, mode, data) {
-  const prefix = "./dist_page"
+async function writeFileAt(prefix, path, mode, data) {
   let dir = prefix+path.split("/").slice(0, -1).join("/")
 
   createDir(dir)
