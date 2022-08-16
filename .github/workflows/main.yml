@@ -1,10 +1,10 @@
 name: Build/release
 
 on:
-  push:
-    # 해당 브랜치에 푸쉬될 때 action 이 실행된다.
+  pull_request:
     branches:
-      - master
+      - main
+    types: [closed]
 
 jobs:
   build:
@@ -15,6 +15,10 @@ jobs:
         os: [macos-latest, windows-latest]
 
     steps:
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
       - name: Check out Git repository
         uses: actions/checkout@v3
 
@@ -28,7 +32,13 @@ jobs:
         run: npm run electron:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: release-drafter/release-drafter@v5
+      - name: ZIP build file
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r dist.zip dist_electron
+      - name: Release Drafter
+        uses: release-drafter/release-drafter@v5
+        id: release_drafter
         # (Optional)
         # workflow 에서 여러 구성이 필요할 때 config-name 에 오버라이드 해줍니다.
         # 반드시 .github/ 에 위치해야합니다.
@@ -36,3 +46,13 @@ jobs:
           config-name: release-drafter-config.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release_drafter.outputs.upload_url }}
+          asset_path: ./dist.zip
+          asset_name: 'DereMemo-${{ runner.os }}.zip'
+          asset_content_type: application/zip
