@@ -37,7 +37,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'release.zip'
-          directory: './dist_electron'
+          path: './dist_electron'
       - name: Release Drafter
         uses: release-drafter/release-drafter@v5
         id: release_drafter
