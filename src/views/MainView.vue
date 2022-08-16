@@ -25,6 +25,18 @@
           <font-awesome-icon class="mr-2" icon="fa-solid fa-plus"/> ADD GALLARY ID
         </button>
       </div>
+      <div id="gallary-form" class="p-10 border-b-2 border-b-gray-100">
+        <p class="mb-1 font-bold text-sm text-gray-500">FOLDER TO SAVE</p>
+        <p class="mb-6 text-sm text-gray-500">Please choose a folder to save the file.</p>
+        <div>
+          <div class="relative w-full">
+            <input disabled type="value" v-model="folderPath" class="block p-2 w-full z-20 text-sm bg-gray-50 rounded-md border border-gray-300 focus:bg-pink-50 focus:border-pink-600 focus:outline-none disabled:opacity-50" placeholder="Choose Folder">
+            <button :disabled="work" @click="showOpenDialog" class="absolute top-0 right-0 p-2 px-3.5 text-sm font-medium text-white bg-pink-500 rounded-r-md border border-pink-500 hover:bg-pink-600 focus:outline-none disabled:opacity-50">
+              Choose Folder
+            </button>
+          </div>
+        </div>
+      </div>
       <div id="submit" class="p-10">
         <button :disabled="disableRequestButton" @click="requestArchive" type="remove" class="w-full p-2 px-3.5 text-sm font-medium text-white bg-pink-500 border border-pink-300 rounded-md hover:bg-pink-600 focus:outline-none disabled:opacity-50">
           <font-awesome-icon class="mr-2" icon="fa-solid fa-rocket" /> START ARCHIVING
@@ -43,7 +55,8 @@ export default {
     return {
       gallary: [],
       gallaryTemplate: {url: "", state: ""},
-      work: false
+      work: false,
+      folderPath: ""
     }
   },
   methods: {
@@ -57,7 +70,7 @@ export default {
     },
     requestArchive () {
       this.work = true
-      
+
       for(let i of this.gallary) {
         i.state = "work"
       }
@@ -83,13 +96,20 @@ export default {
       window.ipcRenderer.on('archive-done', (result) => {
         this.work = false
       })
+    },
+    showOpenDialog(){
+      window.ipcRenderer.send('open-folder-dialog', true)
+
+      window.ipcRenderer.on('folder-path', (path) => {
+        this.folderPath = path
+      })
     }
   },
   computed:{
     disableRequestButton(){
       let emptyGallary = this.gallary.find(x => x.url == "")
 
-      return this.work || emptyGallary
+      return this.work || emptyGallary || this.folderPath == ""
     }
   },
   mounted(){
