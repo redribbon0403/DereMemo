@@ -20,7 +20,7 @@
 <img width="120" alt="스크린샷 2022-08-17 오전 12 03 12" src="https://user-images.githubusercontent.com/111185111/184922283-c48f4a59-5ac3-452f-bdf6-adef685d381e.png">
 <img width="327" alt="스크린샷 2022-08-17 오전 12 15 05" src="https://user-images.githubusercontent.com/111185111/184922294-3e3a9cd5-000d-4e12-b7a0-baac5d0ab333.png">
 정상적으로 작업이 완료됐다면 지정된 폴더에 다음과 같은 데이터가 있을 것입니다.  
-이 파일을 [Github Pages](https://github.com) 와 같은 호스팅 서비스에 배포하거나 VS CODE의 [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 기능을 사용해 로컬에서 확인할 수 있습니다.  
+이 파일을 Github Pages와 같은 호스팅 서비스에 배포하거나 VSCODE의 Live Server 기능을 사용해 로컬에서 확인할 수 있습니다.  
 
 작업이 완료된 파일을 사용하는 방법은 다음과 같은 게시물을 참고해주세요.
 * [깃허브로 나만의 웹사이트 만들기](https://brunch.co.kr/@everiwon/42)
