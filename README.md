@@ -6,7 +6,7 @@ This is an unofficial program for Cinderella Girls provided by Mobage. It can ar
 
 ## Downloadable content
 * Mypage 
-* Idol Gallary
+* Idol Gallery
 * Idol Episode (HTML/Flash)
 
 ## Guide
