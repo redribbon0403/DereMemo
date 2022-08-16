@@ -19,7 +19,7 @@ const URL_REGEX = /(?:(?:\"(?:http|https):.+?\")|(?:\'(?:http|https):.+?\')|(?:\
 export default class Scraper {
   constructor(staticPath = "") {
     this.files = []
-    this.archivedGallary = []
+    this.archivedGallery = []
     this.$axios = axios.create({
       timeout: 10000
     })
@@ -176,7 +176,7 @@ export default class Scraper {
 
     let [page, path] = await this.archivePage({url: url, notSave:true})
 
-    const gallaryContainerHtml = `
+    const galleryContainerHtml = `
     <div class="area_banner_triplicate_wrap area-frame_common">
         <div class="area-frame_wrap">
             <div style="
@@ -185,7 +185,7 @@ export default class Scraper {
                 font-size: 16px;
                 padding: 8px 0 13px 0;
                 border-bottom: 1px solid #aac4d9;
-            ">Gallary</div>
+            ">Gallery</div>
             <div id="link_section" style="
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -203,15 +203,15 @@ export default class Scraper {
       $(this).remove()
     }) 
 
-    $(gallaryContainerHtml).insertBefore("#top > footer")
+    $(galleryContainerHtml).insertBefore("#top > footer")
 
-    for (let gallary of this.archivedGallary){
+    for (let gallery of this.archivedGallery){
       let aElem = $("<a></a>")
-      aElem.attr("href", gallary.url)
+      aElem.attr("href", gallery.url)
 
       let imgElem = $("<img></img>")
       imgElem.attr("style", "width: 100%; border-radius: 10px;")
-      imgElem.attr("src", gallary.gallaryImg)
+      imgElem.attr("src", gallery.galleryImg)
 
       aElem.append(imgElem)
       $("#link_section").append(aElem)
@@ -229,10 +229,10 @@ export default class Scraper {
     log.info("done")
   }
 
-  async archiveGallary(gallaryId) {
-    const gallaryUrl = "http://sp.pf.mbga.jp/12008305/?guid=ON&amp;url=http://mobamas.net/idolmaster/idol_gallery/idol_detail/"+gallaryId
+  async archiveGallery(galleryId) {
+    const galleryUrl = "http://sp.pf.mbga.jp/12008305/?guid=ON&amp;url=http://mobamas.net/idolmaster/idol_gallery/idol_detail/"+galleryId
 
-    let [page, path] = await this.archivePage({url: gallaryUrl, notSave:true})
+    let [page, path] = await this.archivePage({url: galleryUrl, notSave:true})
 
     let imageObjectMatch = page.match(/(?<=idol.images = )(.*)(?=\;)/)[0]
 
@@ -242,8 +242,8 @@ export default class Scraper {
       if ("l" in imageObject && Array.isArray(imageObject.l)) {
         for (let image of imageObject.l.reverse()){
           if(image){
-            this.archivedGallary.push({
-              "gallaryImg": image,
+            this.archivedGallery.push({
+              "galleryImg": image,
               "url" : path
             })
             break
@@ -261,7 +261,7 @@ export default class Scraper {
         if ("flash_path" in story){
           for(let i in story.flash_path) {
             if(story.open_flag[i] == "1") {
-              let url = story.flash_path[i].replaceAll("__hash_card_id__", gallaryId)
+              let url = story.flash_path[i].replaceAll("__hash_card_id__", galleryId)
 
               let voiceEnable = story.voice_enable[i]
 

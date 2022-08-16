@@ -104,15 +104,15 @@ ipcMain.on('login-done', (event, arg) => {
   })
 })
 
-async function archiveGallary(event, url){
+async function archiveGallery(event, url){
   try {
-    await scraper.archiveGallary(url)
-    event.reply('archive-gallary-done', {
+    await scraper.archiveGallery(url)
+    event.reply('archive-gallery-done', {
       'result': true,
       'url' : url
     })
   } catch(err){
-    event.reply('archive-gallary-done', {
+    event.reply('archive-gallery-done', {
       'result': false,
       'url' : url
     })
@@ -137,11 +137,11 @@ ipcMain.on('request-archive', async (event, urlList) => {
     if (fs.existsSync(scraper.getFolderPath())) {
       fs.rmdirSync(scraper.getFolderPath(), {recursive: true})
     }
-    let gallaryPromise = []
+    let galleryPromise = []
     for(let url of urlList){
-      gallaryPromise.push(archiveGallary(event, url))
+      galleryPromise.push(archiveGallery(event, url))
     }
-    await Promise.all(gallaryPromise)
+    await Promise.all(galleryPromise)
     await archiveMypage(event)
   } catch (error) {log.error(error)}
 
