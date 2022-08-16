@@ -134,8 +134,8 @@ async function archiveMypage(event){
 
 ipcMain.on('request-archive', async (event, urlList) => {
   try {
-    if (fs.existsSync("./dist_page")) {
-      fs.rmdirSync("./dist_page", {recursive: true})
+    if (fs.existsSync(scraper.getFolderPath())) {
+      fs.rmdirSync(scraper.getFolderPath(), {recursive: true})
     }
     let gallaryPromise = []
     for(let url of urlList){

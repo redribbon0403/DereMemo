@@ -31,6 +31,10 @@ export default class Scraper {
     this.folderPath = path+"/mobamas_pages"
   }
 
+  getFolderPath(){
+    return this.folderPath
+  }
+
   updateHeader(cookies) {
     this.$axios.defaults.headers.common['User-Agent'] = AGENT
 
