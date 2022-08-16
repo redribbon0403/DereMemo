@@ -1,9 +1,13 @@
 name: Build/release
 
-on: push
+on:
+  push:
+    # 해당 브랜치에 푸쉬될 때 action 이 실행된다.
+    branches:
+      - master
 
 jobs:
-  release:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -12,20 +16,21 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 10
-
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+          node-version: 16
+      - name: install dependency
+        run: npm install
+      - name: Build node app
+        run: npm run electron:build
+      - uses: release-drafter/release-drafter@v5
+        # (Optional)
+        # workflow 에서 여러 구성이 필요할 때 config-name 에 오버라이드 해줍니다.
+        # 반드시 .github/ 에 위치해야합니다.
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          config-name: release-drafter-config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
