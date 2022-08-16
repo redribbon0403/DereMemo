@@ -30,5 +30,5 @@
 오류가 발생했을때는 해당 페이지의 Issues 탭을 사용하면 됩니다. 이때 프로그램의 로그를 첨부하면 훨씬 대처가 쉬워집니다.  
 
 로그파일 경로는 다음과 같습니다.
-* on macOS: ~/Library/Logs/{app name}/{process type}.log
-* on Windows: %USERPROFILE%\AppData\Roaming\{app name}\logs\{process type}.log
+* on macOS: ~/Library/Logs/DereMemo
+* on Windows: %USERPROFILE%\AppData\Roaming\DereMemo\logs
