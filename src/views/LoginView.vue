@@ -30,7 +30,7 @@ export default {
       const mypage = "http://sp.pf.mbga.jp/12008305/?guid=ON&url=http://mobamas.net/idolmaster/mypage?"
 
       if(!url.startsWith("https://connect.mobage.jp/login")){
-        if(url != mypage){
+        if(url.indexOf("sp.pf.mbga.jp/12008305") < 0){
           webview.loadURL(mypage)
         } else {
           window.ipcRenderer.send('login-done', true)
