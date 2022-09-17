@@ -18,8 +18,8 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() { 
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    width: 1400,
+    height: 900,
     webPreferences: {   
       webviewTag: true,
       preload: path.join(__dirname, 'preload.js'),
