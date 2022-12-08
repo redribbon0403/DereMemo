@@ -116,8 +116,9 @@ export default class Scraper {
         let voiceUrl = []
         let jumpUrl = ""
 
+        const regexp = new RegExp('^(?:http|https)://resource.mobamas.net');
         for (let i of extraUrl){
-          if (i.startsWith("http://resource.mobamas.net")) {
+          if (regexp.test(i)) {
             voiceUrl.push(i)
           } else {
             jumpUrl = i

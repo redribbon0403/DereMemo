@@ -37,6 +37,7 @@ function replaceTextByDict({page, data, fromKey="from", toKey="to"}){
 function convertJumpUrl(jump_url) {
   let newJumpUrl = decodeURIComponent(jump_url)
   newJumpUrl = newJumpUrl.replaceAll("http://sp.pf.mbga.jp/12008305/?guid=ON&amp;url=http://mobamas.net", "")
+  newJumpUrl = newJumpUrl.replaceAll("https://sp.pf.mbga.jp/12008305/?guid=ON&amp;url=http://mobamas.net", "")
   newJumpUrl = newJumpUrl.split("/").slice(0, -1).join("/")
 
   return newJumpUrl

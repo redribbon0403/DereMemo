@@ -9,7 +9,7 @@ function getUrlFromSwf(data) {
   let pos = 0
 
   while(true){
-    let start = data.indexOf(Buffer.from("http://"), pos)
+    let start = data.indexOf(Buffer.from("http"), pos)
     let end = data.indexOf(Buffer.from(["0x00"]), start)
 
     if (start == -1 || end == -1){
@@ -18,7 +18,10 @@ function getUrlFromSwf(data) {
 
     let str = data.subarray(start, end).toString("utf8")
 
-    if(str.startsWith("http://sp.pf.mbga.jp") || str.startsWith("http://resource.mobamas.net")){
+    const regexp1 = new RegExp('^(?:http|https)://resource.mobamas.net');
+    const regexp2 = new RegExp('^(?:http|https)://sp.pf.mbga.jp');
+
+    if(regexp1.test(str) || regexp2.test(str)){
       result.push(str)
     }
 
